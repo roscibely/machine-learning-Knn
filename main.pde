@@ -3,16 +3,18 @@ ArrayList<Wine> testdata;
 
 final int total_data = 14;
 final int K=3; 
-
+int classe[];
 
 
 void knn(){
   Wine[] dist, x, train;
+  classe= new int[traindata.size()];
   x = new Wine[testdata.size()];
   dist = new Wine[traindata.size()];
   train = new Wine[traindata.size()];
   for (int j =0; j<testdata.size(); j++) {
       x[j] = testdata.get(j);
+      classe[j] = traindata.get(j).getClasse();
       for(int i=1; i<14; i++){
         train[i] = traindata.get(i);
         dist[i] = new Wine(pow((train[i].getAlcohol() - x[i].getAlcohol()),2), pow((train[i].getMalic_acid() - x[i].getMalic_acid()),2), 
@@ -28,6 +30,9 @@ void knn(){
         pow((train[i].getDiluted() - x[i].getDiluted()),2),
         pow((train[i].getProline() - x[i].getProline()),2)); 
       }
+      
+      
+      
     
   }
   

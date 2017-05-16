@@ -144,11 +144,7 @@ class Wine {
     public void setProline(float proline) {
         this.proline = proline;
     }
-    
-    public float difference(Wine x, Wine y){
-      
-      
-    }
+
 
 
 }
