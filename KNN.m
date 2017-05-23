@@ -23,12 +23,10 @@ end
 
 %%Selects random values from the file for test and train data
 X = date; 
-nrows = size(X, 1);
-randrows = randperm(nrows);
-x=1; y =90; %random value
-testdata = X(randrows(x:y), :); %Test data
-x=60; y = 133; %random value
-traindata = X(randrows(1, x-1:y+1, end), :); %Train data
+nrows = size(X, 1); %Number of rows 
+randrows = randperm(nrows); %Random permutation
+testdata = X(randrows(1:89), :); %Test data. 
+traindata = X(randrows(90:end), :); %Train data
 
 %%KNN Classifier function
 d = zeros(size(traindata, 1), 1); %Distance
@@ -55,18 +53,31 @@ for i = 1 : size(testdata)
     if(testdata(i,1)==2 & classe(i)==2) hits2= hits2+1; end
     %Hits class 3
     if(testdata(i,1)==3 & classe(i)==3) hits3= hits3+1; end
+
 end
+
+%Graphic
+plot(classe, 'r.'); hold on; plot(testdata(:,1), 'o');
+title('CLASS')
+legend('Estimate with KNN','True classes');
+ylim([0,4]);
 
 %ERROR
     error = abs(classe' - testdata(:, 1));
 
+%True positives
+    TP = hits1+hits2+hits3; 
+%False positives
+    FP = length(classe) - TP; 
+%True Negative
+    %TN 
+   
 %SENSITIVITY
-       disp('Sensitivity');
-       Se = (hits1+hits2+hits3)/length(error)    %VP/VP+FN
-
+     Se = (hits1+hits2+hits3)/length(error)    %VP/VP+FN
 %SPECIFICITY 
-    disp('Specificity');
     Sp = (length(error) -(hits1+hits2+hits3))/length(error)    %VN/VN+FP 
+    
+fprintf('Sensitivity \t Specificity \t TP \t FP \n %f   \t     %f  \t %d \t %d \n', Se, Sp, TP, FP);
 
 
 
